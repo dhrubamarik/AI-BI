@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Business Intelligence Dashboard - Analyze Any CSV with AI</title>
+    <meta name="description" content="Instantly analyze business data with AI-powered insights. Ask natural language questions about your CSV files and get beautiful charts.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .animate-slide-right {
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gradient-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(226, 232, 240, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-md border-b border-gray-200 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 gradient-btn rounded-lg flex items-center justify-center">
+                    <i class="fas fa-chart-line text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-bold gradient-text">AI BI</span>
+            </div>
+
+            <!-- Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-gray-900 transition">Features</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition">How It Works</a>
+                <a href="#faq" class="text-gray-600 hover:text-gray-900 transition">FAQ</a>
+            </div>
+
+            <!-- Auth Buttons -->
+            <div class="flex items-center space-x-4">
+                <a href="/login" class="text-gray-600 hover:text-gray-900 transition font-medium">
+                    Login
+                </a>
+                <a href="/register" class="gradient-btn text-white px-6 py-2 rounded-lg font-medium">
+                    Sign Up Free
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 bg-gradient-to-b from-blue-50 to-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+
+                <!-- Left Content -->
+                <div class="animate-fade-up">
+                    <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                        Understand Your Data
+                        <span class="gradient-text block">With AI Insights</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Upload any CSV file. Ask questions in plain English. Get instant visualizations and actionable insights powered by advanced AI.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="/register" class="gradient-btn text-white px-8 py-4 rounded-lg font-semibold text-center">
+                            <i class="fas fa-rocket mr-2"></i>Get Started Free
+                        </a>
+                        <a href="#demo" class="border-2 border-gray-300 text-gray-900 px-8 py-4 rounded-lg font-semibold hover:border-gray-400 transition text-center">
+                            <i class="fas fa-play mr-2"></i>Watch Demo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Image/Demo -->
+                <div class="animate-slide-right hidden md:block">
+                    <div class="relative">
+                        <!-- Mock Dashboard -->
+                        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+                            <!-- Header -->
+                            <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-white">
+                                <h3 class="text-lg font-semibold mb-2">Sample Analysis</h3>
+                                <p class="text-blue-100 text-sm">Sales Data • 1,000 records</p>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="p-6">
+                                <!-- Message -->
+                                <div class="mb-6">
+                                    <div class="flex justify-end mb-4">
+                                        <div class="bg-blue-500 text-white rounded-lg px-4 py-2 max-w-xs text-sm">
+                                            What's my total revenue by region?
+                                        </div>
+                                    </div>
+                                    <div class="flex mb-4">
+                                        <div class="bg-gray-100 rounded-lg px-4 py-2 max-w-xs text-sm text-gray-800">
+                                            <p class="font-semibold mb-2">📊 Analysis Results</p>
+                                            <p class="text-xs">Your revenue shows North region leading with $2.4M...</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mini Chart -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="text-xs font-semibold text-gray-600 mb-3">Revenue by Region</div>
+                                    <div class="flex items-end gap-2 h-32">
+                                        <div class="flex-1 bg-blue-400 rounded-t h-4/5"></div>
+                                        <div class="flex-1 bg-blue-300 rounded-t h-3/5"></div>
+                                        <div class="flex-1 bg-blue-200 rounded-t h-2/5"></div>
+                                        <div class="flex-1 bg-blue-100 rounded-t h-1/5"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl p-4 border border-gray-200">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-900">Analysis Complete</p>
+                                    <p class="text-xs text-gray-500">In 2 seconds</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Powerful Features
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Everything you need to understand your business data in minutes, not hours.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8">
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-file-csv text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">
+                        Universal CSV Support
+                    </h3>
+                    <p class="text-gray-600">
+                        Upload any CSV file - sales data, HR records, financial statements. No templates required.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8">
+                    <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">
+                        AI-Powered Analysis
+                    </h3>
+                    <p class="text-gray-600">
+                        Advanced AI automatically detects your data domain and generates relevant insights.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8">
+                    <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-comments text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">
+                        Natural Language Queries
+                    </h3>
+                    <p class="text-gray-600">
+                        Ask questions in plain English. No SQL or technical knowledge required.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8">
+                    <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-pie text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">
+                        Dynamic Visualizations
+                    </h3>
+                    <p class="text-gray-600">
+                        Beautiful, interactive charts that adapt to your data automatically.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-history text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">
+                        Full History & Export
+                    </h3>
+                    <p class="text-gray-600">
+                        Access all previous analyses and export results in multiple formats.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-gray-50 rounded-xl p-8">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">
+                        Enterprise Security
+                    </h3>
+                    <p class="text-gray-600">
+                        End-to-end encryption, cloud storage, and complete data privacy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    How It Works
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Three simple steps to data insights
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- Step 1 -->
+                <div class="relative">
+                    <div class="bg-white rounded-xl p-8 border-2 border-gray-200 h-full">
+                        <div class="w-16 h-16 gradient-btn rounded-lg flex items-center justify-center text-white text-3xl font-bold mb-4">
+                            1
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Upload CSV</h3>
+                        <p class="text-gray-600 mb-4">
+                            Select any CSV file from your computer. Our AI automatically analyzes the structure.
+                        </p>
+                        <div class="bg-blue-50 rounded-lg p-4 text-sm text-gray-600">
+                            ✓ Supports any CSV format
+                            <br/>✓ Auto-detects data type
+                            <br/>✓ No file size limits*
+                        </div>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-8 bg-white border-2 border-gray-200 rounded-full transform -translate-y-1/2"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative">
+                    <div class="bg-white rounded-xl p-8 border-2 border-gray-200 h-full">
+                        <div class="w-16 h-16 gradient-btn rounded-lg flex items-center justify-center text-white text-3xl font-bold mb-4">
+                            2
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Ask Questions</h3>
+                        <p class="text-gray-600 mb-4">
+                            Type natural language questions about your data. AI understands your intent.
+                        </p>
+                        <div class="bg-purple-50 rounded-lg p-4 text-sm text-gray-600">
+                            ✓ "Show revenue by region"
+                            <br/>✓ "Top performing products?"
+                            <br/>✓ "Year-over-year growth?"
+                        </div>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-8 bg-white border-2 border-gray-200 rounded-full transform -translate-y-1/2"></div>
+                </div>
+
+                <!-- Step 3 -->
+                <div>
+                    <div class="bg-white rounded-xl p-8 border-2 border-gray-200 h-full">
+                        <div class="w-16 h-16 gradient-btn rounded-lg flex items-center justify-center text-white text-3xl font-bold mb-4">
+                            3
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Get Insights</h3>
+                        <p class="text-gray-600 mb-4">
+                            Receive instant analysis with beautiful visualizations and actionable insights.
+                        </p>
+                        <div class="bg-green-50 rounded-lg p-4 text-sm text-gray-600">
+                            ✓ Auto-generated charts
+                            <br/>✓ Key metrics highlighted
+                            <br/>✓ Export ready
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Frequently Asked Questions
+                </h2>
+            </div>
+
+            <div class="space-y-6">
+
+                <!-- FAQ 1 -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            What file formats are supported?
+                        </h3>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-600 mt-2 hidden">
+                        We support CSV files of any size. The AI can understand and analyze any CSV structure - no need for specific column names or formats.
+                    </p>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            Is my data secure?
+                        </h3>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-600 mt-2 hidden">
+                        Yes. All data is encrypted in transit and at rest. We store files securely with automatic backups. Your data is never shared or used for training.
+                    </p>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            What kind of questions can I ask?
+                        </h3>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-600 mt-2 hidden">
+                        You can ask any question about your data - summaries, trends, comparisons, predictions, insights, and more. The AI understands context and business terminology.
+                    </p>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            Can I export my analysis?
+                        </h3>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-600 mt-2 hidden">
+                        Yes. You can export charts as PNG/PDF, create reports, or download raw data. All exports are available in your dashboard history.
+                    </p>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            Do I need to know SQL or programming?
+                        </h3>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-600 mt-2 hidden">
+                        No! The entire interface is designed for non-technical users. Just upload your file and ask questions in plain English.
+                    </p>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            How much does it cost?
+                        </h3>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-600 mt-2 hidden">
+                        We offer a free tier to get started. As you scale, flexible subscription plans are available. Contact us for custom enterprise pricing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to understand your data?
+            </h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Join teams using AI BI to make smarter business decisions instantly.
+            </p>
+            <a href="/register" class="inline-block bg-white text-gray-900 px-10 py-4 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105">
+                <i class="fas fa-rocket mr-2"></i>Start Free Today
+            </a>
+            <p class="text-blue-100 text-sm mt-4">
+                ✓ No credit card required • ✓ Takes 30 seconds to sign up
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <span class="text-white font-bold text-lg">AI BI</span>
+                    </div>
+                    <p class="text-sm">
+                        AI-powered business intelligence for everyone.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
+                        <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">About</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm">
+                    &copy; 2024 AI Business Intelligence. All rights reserved.
+                </p>
+                <div class="flex items-center space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="hover:text-white transition">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="hover:text-white transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FAQ Interactivity -->
+    <script>
+        document.querySelectorAll('#faq .bg-gray-50').forEach(item => {
+            item.addEventListener('click', function() {
+                const answer = this.querySelector('p');
+                answer.classList.toggle('hidden');
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

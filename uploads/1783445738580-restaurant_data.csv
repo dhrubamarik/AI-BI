@@ -1,0 +1,16 @@
+restaurant,cuisine,orders,revenue,rating,city
+Pizza Palace,Italian,340,8500,4.5,New York
+Burger Barn,American,520,7800,4.2,Chicago
+Sushi Stop,Japanese,210,9200,4.8,New York
+Taco Town,Mexican,430,6400,4.1,Houston
+Pasta Place,Italian,280,7100,4.4,Chicago
+BBQ Bros,American,390,8900,4.6,Houston
+Ramen Rack,Japanese,175,5800,4.7,New York
+Curry Club,Indian,260,7600,4.3,Chicago
+Dim Sum Den,Chinese,315,8200,4.5,Houston
+Salad Stop,Healthy,190,5200,4.0,New York
+Burger King,American,610,9100,4.1,Chicago
+Sushi World,Japanese,290,10200,4.9,Houston
+Taco Bell,Mexican,580,8100,3.9,New York
+Olive Garden,Italian,420,11200,4.6,Chicago
+Panda Express,Chinese,375,7400,4.2,Houston

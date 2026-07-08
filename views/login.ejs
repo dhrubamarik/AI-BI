@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AI BI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gradient-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen flex items-center justify-center px-6">
+
+    <div class="w-full max-w-md animate-fade-up">
+
+        <!-- Logo -->
+        <div class="flex items-center justify-center space-x-3 mb-8">
+            <div class="w-10 h-10 gradient-btn rounded-lg flex items-center justify-center">
+                <i class="fas fa-chart-line text-white text-lg"></i>
+            </div>
+            <span class="text-2xl font-bold gradient-text">AI BI</span>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-1 text-center">Welcome back</h1>
+            <p class="text-gray-500 text-center mb-8">Log in to your account to continue</p>
+
+            <form method="post" action="/login" class="space-y-4">
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input
+                            class="w-full pl-11 pr-4 py-3 rounded-lg bg-gray-50 border-2 border-gray-200 outline-none focus:border-blue-500 transition text-gray-900"
+                            type="email" placeholder="you@example.com" name="email" required>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input id="password"
+                            class="w-full pl-11 pr-11 py-3 rounded-lg bg-gray-50 border-2 border-gray-200 outline-none focus:border-blue-500 transition text-gray-900"
+                            type="password" placeholder="Enter your password" name="password" required>
+                        <button type="button" onclick="togglePassword()"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 cursor-pointer bg-transparent border-none p-0">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                    
+                </div>
+
+                <!-- Submit -->
+                <input
+                    class="w-full gradient-btn text-white px-6 py-3 rounded-lg font-semibold cursor-pointer mt-2"
+                    type="submit" value="Log In">
+            </form>
+
+            <p class="text-center text-sm text-gray-500 mt-6">
+                Don't have an account?
+                <a href="/register" class="text-blue-600 hover:text-blue-700 font-medium">Sign up free</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerHTML = `
+                    <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.06 18.06 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.15 18.15 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                `;
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerHTML = `
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>

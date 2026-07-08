@@ -1,0 +1,293 @@
+<div class="chat-area flex-1 flex flex-col bg-slate-50">
+    <div class="px-6 py-4 border-b flex justify-between items-center bg-white z-10 shadow-sm border-slate-100">
+        <div>
+            <h2 class="text-sm font-bold text-slate-800 tracking-tight">Business Intelligence Assistant</h2>
+            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">
+                <% if(activeFile){ %>
+                    Dataset: <span class="text-blue-600"><%= activeFile.fileName %></span>
+                <% } else { %>
+                    Awaiting Dataset Upload...
+                <% } %>
+            </p>
+        </div>
+        <button onclick="clearChatUI()" class="text-xs text-slate-400 hover:text-red-500 font-semibold px-2.5 py-1.5 hover:bg-red-50 rounded-lg transition-all">
+            <i class="fas fa-trash-alt mr-1.5 text-[11px]"></i>Clear View
+        </button>
+    </div>
+
+    <div id="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/60 custom-scroll">
+        <% if(!activeFile){ %>
+            <div class="flex flex-col items-center justify-center h-full text-center">
+                <div class="w-16 h-16 bg-white border border-slate-100 rounded-2xl shadow-sm flex items-center justify-center mb-4">
+                    <i class="fas fa-file-csv text-3xl text-slate-300"></i>
+                </div>
+                <p class="text-sm font-semibold text-slate-600">No active business dataset found</p>
+                <p class="text-xs text-slate-400 mt-1 max-w-xs">Drop or choose a CSV file on your sidebar panel to open analytical pipelines.</p>
+            </div>
+        <% } else { %>
+            
+            <div id="historicalMessages" class="space-y-6">
+                <% if(conversationHistory && conversationHistory.length > 0){ %>
+                    <% conversationHistory.forEach((msg, mIdx) => { %>
+                        <div class="flex <%= msg.role === 'user' ? 'justify-end' : 'justify-start' %> items-start message-fade">
+                            <% if(msg.role === 'ai') { %>
+                                <div class="w-8 h-8 bg-blue-600 rounded-xl flex-shrink-0 flex items-center justify-center mr-3 shadow-md shadow-blue-200">
+                                    <i class="fas fa-robot text-white text-xs"></i>
+                                </div>
+                            <% } %>
+                            
+                            <div class="<%= msg.role === 'user' ? 'bg-blue-600 text-white rounded-2xl rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-800 rounded-2xl rounded-tl-sm' %> p-4 max-w-[80%] shadow-sm">
+                                <p class="text-xs font-medium whitespace-pre-line leading-relaxed"><%= msg.content %></p>
+                                
+                                <% if(msg.charts && msg.charts.length > 0) { %>
+                                    <div class="mt-4 space-y-4">
+                                        <% msg.charts.forEach((chart, cIdx) => { %>
+                                            <div class="bg-slate-50/80 p-4 rounded-xl border border-slate-100 shadow-inner">
+                                                <p class="text-[10px] font-bold text-slate-400 mb-3 uppercase tracking-wider"><%= chart.title %></p>
+                                                <div style="height:260px; width:100%;">
+                                                    <canvas id="hist_<%= mIdx %>_<%= cIdx %>" 
+                                                            data-config='<%- JSON.stringify(chart) %>'></canvas>
+                                                </div>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                <% } %>
+                                <div class="flex items-center justify-between mt-2.5 opacity-60 text-[9px] font-medium">
+                                    <span><%= new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></span>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+        <% } %>
+
+        <div id="dynamicMessages" class="space-y-6"></div>
+        
+        <div id="typingIndicator" class="hidden flex items-start space-x-3 message-fade">
+            <div class="w-8 h-8 bg-blue-600 rounded-xl flex-shrink-0 flex items-center justify-center shadow-md shadow-blue-200">
+                <i class="fas fa-robot text-white text-xs"></i>
+            </div>
+            <div class="bg-white px-4 py-3 rounded-2xl rounded-tl-sm border border-slate-200 shadow-sm flex items-center">
+                <div class="flex space-x-1.5 items-center py-1">
+                    <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-duration: 0.8s;"></div>
+                    <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay:150ms; animation-duration: 0.8s;"></div>
+                    <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay:300ms; animation-duration: 0.8s;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-4 bg-white border-t border-slate-100">
+        <div class="max-w-4xl mx-auto flex space-x-3 items-center">
+            <div class="flex-1 relative">
+                <input type="text" id="questionInput" 
+                    class="w-full border border-slate-200 py-3 px-4 pr-12 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all bg-slate-50/50 placeholder-slate-400" 
+                    placeholder="<%= activeFile ? 'Ask a business intelligence question...' : 'Please choose an active dataset file to map questions' %>"
+                    <%= !activeFile ? 'disabled' : '' %>>
+            </div>
+            <button onclick="askQuestion()" id="askBtn"
+                class="bg-blue-600 hover:bg-blue-500 text-white h-10 px-5 rounded-xl shadow-md shadow-blue-200 active:scale-95 transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center">
+                <i class="fas fa-paper-plane text-xs"></i>
+            </button>
+        </div>
+        <p class="text-[9px] text-slate-400 mt-2 text-center font-medium tracking-wide">BI Insight Engine | Framework Powered by Llama 3.3 Architecture</p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // 1. CHART MANAGEMENT
+    const chartCache = new Map();
+
+    function renderPendingCharts() {
+        document.querySelectorAll('canvas[data-config]').forEach(canvas => {
+            if (chartCache.has(canvas.id)) return;
+            
+            try {
+                const config = JSON.parse(canvas.getAttribute('data-config'));
+                const ctx = canvas.getContext('2d');
+                
+                const instance = new Chart(ctx, {
+                    type: config.type,
+                    data: config.data,
+                    options: { 
+                        ...config.options, 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom', 
+                                labels: { boxWidth: 8, font: { size: 10, family: 'Inter', weight: '500' }, padding: 15 } 
+                            } 
+                        }
+                    }
+                });
+                
+                chartCache.set(canvas.id, instance);
+            } catch (err) { console.error("Chart Render Fail:", err); }
+        });
+    }
+
+    // 2. CHAT FUNCTIONALITY
+    function addMessage(role, content, charts = null) {
+        const container = document.getElementById('dynamicMessages');
+        const msgId = 'live_' + Date.now();
+        let chartsHtml = '';
+
+        if (charts && charts.length > 0) {
+            chartsHtml = '<div class="mt-4 space-y-4">';
+            charts.forEach((c, i) => {
+                const id = `${msgId}_${i}`;
+                chartsHtml += `
+                    <div class="bg-slate-50/80 p-4 rounded-xl border border-slate-100 shadow-inner">
+                        <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-wider">${escapeHtml(c.title)}</p>
+                        <div style="height:260px;"><canvas id="${id}" data-config='${JSON.stringify(c)}'></canvas></div>
+                    </div>`;
+            });
+            chartsHtml += '</div>';
+        }
+
+        const html = `
+            <div class="flex ${role === 'user' ? 'justify-end' : 'justify-start'} items-start message-fade mb-6">
+                ${role === 'ai' ? '<div class="w-8 h-8 bg-blue-600 rounded-xl flex-shrink-0 flex items-center justify-center mr-3 shadow-md shadow-blue-200"><i class="fas fa-robot text-white text-xs"></i></div>' : ''}
+                <div class="${role === 'user' ? 'bg-blue-600 text-white rounded-2xl rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-800 rounded-2xl rounded-tl-sm'} p-4 max-w-[80%] shadow-sm">
+                    <p class="text-xs font-medium whitespace-pre-line leading-relaxed">${content}</p>
+                    ${chartsHtml}
+                    <p class="text-[9px] mt-2 opacity-50 font-medium">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                </div>
+            </div>`;
+        
+        container.insertAdjacentHTML('beforeend', html);
+        
+        setTimeout(renderPendingCharts, 100);
+        scrollToBottom();
+    }
+
+    async function askQuestion() {
+        const input = document.getElementById('questionInput');
+        const q = input.value.trim();
+        if(!q) return;
+        
+        input.value = '';
+        addMessage('user', q);
+        document.getElementById('typingIndicator').classList.remove('hidden');
+        scrollToBottom();
+
+        try {
+            const res = await fetch('/ask', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ question: q })
+            });
+            const result = await res.json();
+            document.getElementById('typingIndicator').classList.add('hidden');
+            
+            if(result.success) {
+                addMessage('ai', result.answer, result.charts);
+            } else {
+                addMessage('ai', "Analysis Error: " + (result.error || "The AI is currently unavailable."));
+            }
+        } catch (e) {
+            document.getElementById('typingIndicator').classList.add('hidden');
+            addMessage('ai', "Network error. Please ensure your connection is stable.");
+        }
+    }
+
+    // 3. SIDEBAR & FILE HANDLING LOGIC
+    async function uploadFile() {
+        const fileInput = document.getElementById('csvFileInput');
+        if (!fileInput.files[0]) return;
+
+        const formData = new FormData();
+        formData.append('csvFile', fileInput.files[0]);
+
+        document.getElementById('uploadBtn').classList.add('hidden');
+        document.getElementById('uploadProgress').classList.remove('hidden');
+
+        try {
+            const response = await fetch('/upload', { method: 'POST', body: formData });
+            const result = await response.json();
+            if (result.success) {
+                window.location.reload();
+            } else {
+                alert("Upload failed: " + result.error);
+                resetUploadUI();
+            }
+        } catch (error) {
+            alert("Internal server error during upload.");
+            resetUploadUI();
+        }
+    }
+
+    async function setActiveFile(fileId) {
+        try {
+            const res = await fetch('/file/activate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fileId })
+            });
+            if ((await res.json()).success) window.location.reload();
+        } catch (e) { alert("Switch error"); }
+    }
+
+    async function deleteFile(fileId) {
+        if (!confirm('This will delete the file and all associated chat history. Continue?')) return;
+        try {
+            const res = await fetch(`/file/${fileId}`, { method: 'DELETE' });
+            if ((await res.json()).success) window.location.reload();
+        } catch (e) { alert("Delete error"); }
+    }
+
+    function logout() { 
+        if(confirm("Logout of your session?")) window.location.href = '/logout'; 
+    }
+
+    // 4. VIEW CONTROLS
+    function clearChatUI() {
+        if(confirm("Clear current message view? (History is preserved in database)")) {
+            const hist = document.getElementById('historicalMessages');
+            const dyn = document.getElementById('dynamicMessages');
+            if(hist) hist.innerHTML = '';
+            if(dyn) dyn.innerHTML = '';
+            
+            chartCache.forEach(c => c.destroy());
+            chartCache.clear();
+            
+            addMessage('ai', "View cleared. Ready for your next question.");
+        }
+    }
+
+    // 5. UTILITIES & INITIALIZATION
+    function resetUploadUI() {
+        document.getElementById('uploadProgress').classList.add('hidden');
+        document.getElementById('uploadBtn').classList.remove('hidden');
+    }
+
+    function scrollToBottom() { 
+        const c = document.getElementById('messagesContainer'); 
+        if(c) c.scrollTop = c.scrollHeight; 
+    }
+
+    function escapeHtml(t) {
+        const m = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"' text":"&#039;"};
+        return String(t).replace(/[&<>"']/g, s => m[s]);
+    }
+
+    window.onload = () => {
+        setTimeout(renderPendingCharts, 400); 
+        scrollToBottom();
+    };
+
+    document.getElementById('questionInput')?.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') askQuestion();
+    });
+    
+    document.getElementById('csvFileInput')?.addEventListener('change', function() {
+        if(this.files[0]) {
+            document.getElementById('selectedFileName').textContent = this.files[0].name;
+            document.getElementById('selectedFileName').classList.remove('hidden');
+            document.getElementById('uploadBtn').classList.remove('hidden');
+        }
+    });
+</script>

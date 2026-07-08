@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Local Environment Variables
+.env
+
+# Large CSV Uploads (Privacy & Storage)
+uploads/*.csv
+uploads/*
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
